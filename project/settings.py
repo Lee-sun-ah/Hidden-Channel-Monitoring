@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dummy',
-        'USER': 'root',
-        'PASSWORD': '0000',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': 'deepolice',
+        'USER': 'deepolice',
+        'PASSWORD': '1234',
+        'HOST': '218.146.20.51',
+        'PORT': '53306',
     }
 }
 

@@ -5,19 +5,22 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <link rel="stylesheet" href="{% static 'css/firstpage.css' %}">
+        <link rel="stylesheet" href="{% static 'css/channel_info.css' %}">
         <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script> <!-- 값 제어를 위해 jquery -->
         <link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" media="all">
         <!-- Air datepicker css -->
         <script src="{% static 'js/datepicker.js' %}"></script> <!-- Air datepicker js -->
         <script src="{% static 'js/datepicker.ko.js' %}"></script> <!-- 달력 한글 추가를 위해 커스텀 -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+        <title>HIDDEN CHANNEL MONITORING</title>
     </head>
     <body>
         <header>
-            <title>HIDDEN CHANNEL MONITORING</title>
             <div id=title>
                 <a href=''><img id=logo src="{% static 'images/logo.png' %}" ></a><br>
-                <strong>HIDDEN CHANNEL MONITORING</strong>
+                HIDDEN CHANNEL MONITORING
             </div>
             
         </header>
@@ -40,12 +43,11 @@
                         <input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
                     </div>
                     <div id=submit>
-                        <button type="submit" onclick='printresult()' id="search">검색
+                        <button type="submit" onclick='printresult()' id="search">검색</button>
                     </div>
                     
                 </form>
-                
-                <div id=tab></div>
+                <div id="tab"></div>
 
             </div>
             <footer></footer>
@@ -65,9 +67,9 @@
 
             html+="{% for data in datas %}";
             html+="<tr>";
-            html+="<td><strong>{{data.index}}</strong></td>";
-            html+="<td>{{data.channel}}</td>";
-            html+="<td>{{data.url}}</td>";
+            html+="<td><strong>{{data.tel_index}}</strong></td>";
+            html+="<td>{{data.channel_name}}</td>";
+            html+="<td>{{data.channel_url}}</td>";
             html+="<td>{{data.risk}}</td>";
             html+="</tr>";
             html+="{%endfor%}";

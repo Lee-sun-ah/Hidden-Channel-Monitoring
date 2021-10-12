@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .models import First
+from .models import TelChannel
 
 # Create your views here.
 
 def index(request):
     return render(request,'main/index.html')
 
-def first(request):
-    datas=First.objects.all()
-    return render(request,'main/firstpage.html',{"datas":datas})
+def channel_info(request):
+    datas=TelChannel.objects.all()
+    return render(request,'main/channel_info.html',{"datas":datas})
