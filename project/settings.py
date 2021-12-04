@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-s5=jc)%c5jpsijiz2e3jku!3k3#+@x65nzvr5y!1k3rq@nmh1e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,14 +76,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'deepolice',
-        'USER': 'deepolice',
-        'PASSWORD': '1234',
-        'HOST': '218.146.20.51',
-        'PORT': '53306',
-    }
+
 }
 
 # Password validation

@@ -1,26 +1,485 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <link rel="stylesheet" href="{% static 'css/index.css' %}">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-        <title>HIDDEN CHANNEL MONITORING</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Your description">
+    <meta name="author" content="Your name">
 
-    </head>
-    <body>
-        <div id=content>
-            <div id="img"></div>
-            <div id="name" onClick="location.href='/'">DEEPOLICE</div>
-            <div id="name2">Hideen Channel Monitoring</div>
-            <button type="button" onClick="location.href='channel_info/'">START-></button>
+    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
+	<meta property="og:site_name" content="" /> <!-- website name -->
+	<meta property="og:site" content="" /> <!-- website link -->
+	<meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
+	<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+	<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+	<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+	<meta name="twitter:card" content="summary_large_image">
 
+    <!-- Webpage Title -->
+    <title>Hidden Channel Monitoring</title>
+    
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
+    <link href="{% static 'css/swiper.css' %}" rel="stylesheet">
+	<link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
+	<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+	
+	<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script> <!-- 값 제어를 위해 jquery -->
+	<link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" media="all">
+	<!-- Air datepicker css -->
+	<script src="{% static 'js/datepicker.js' %}"></script> <!-- Air datepicker js -->
+	<script src="{% static 'js/datepicker.ko.js' %}"></script> <!-- 달력 한글 추가를 위해 커스텀 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    
+	<!-- Favicon  -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+</head>
+<body data-spy="scroll" data-target=".fixed-top">
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+        <div class="container">
+            
+            <!-- Text Logo - Use this if you don't have a graphic logo -->
+            <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Gemdev</a> -->
+
+            <!-- Image Logo -->
+            <!--<a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a> -->
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#statement">Search <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div> <!-- end of navbar-collapse -->
+        </div> <!-- end of container -->
+    </nav> <!-- end of navbar -->
+    <!-- end of navigation -->
+
+    <!-- Header -->
+    <div class="header">
+        <div class="ocean">
+            <div class="wave"></div>
+            <div class="wave"></div>
         </div>
-    </body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="text-container">
+                        <h1 class="h1-large">DEEPOLICE</h1>
+                        <p class="p-large">Hidden Channel Monitoring</p>
+                        <a class="btn-solid-lg page-scroll" href="#statement">Start</a>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6">
+                    <div class="image-container">
+                        <a href="/"><img class="img-fluid" src="{% static 'images/deepolice_logo.png' %}" alt="alternative"></a>
+                    </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of header -->
 
+    <div id="statement" class="basic-1">
+        <div class="container">
+            <div class="row">
+                <div id=content>
+                    <iframe src="http://ec2-13-209-69-94.ap-northeast-2.compute.amazonaws.com:5601/app/dashboards#/view/0c967200-5309-11ec-8278-c99159bc0f68?embed=true&_g=(filters%3A!()%2Cquery%3A(language%3Akuery%2Cquery%3A'')%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Fd%2Cto%3Anow))" height="600" width="800"></iframe>                        <form>
+                            <div id=platform>
+                                <h4>플랫폼</h4>
+                                <input type="radio" name="platforms" value="twitter" > 트위터<br>
+                                <input type="radio" name="platforms" value="telegram" > 텔레그램<br>
+                                <input type="radio" name="platforms" value="discord" > 디스코드
+                            </div>
+                            <div id=type>
+                                <h4>범죄 유형</h4>
+                                <input type="radio" name="crimes" value="sexcrime" > 성범죄<br>
+                                <input type="radio" name="crimes" value="drug"> 마약<br>
+                                <input type="radio" name="crimes" value="gambling" > 도박
+                            </div>
+                            <div id=calender>
+                                <h4>기간 선택</h4>
+                                <input type="text" name="date1" id="datepicker1"> ~ <input type="text" name="date2" id="datepicker2">
+                            </div>
+                            <input type="button" class="results" value="검색" id="search">
+                            <br>
+                        </form>
+                </div>
+                <figure class="highcharts-figure" style="text-align:center;">
+                    <div id="container" style="display:inline-block;"></div>
+                </figure>
+                <a href="javascript:window.history.back();">Button</a>
+                <div id=tab style="	width:100%; height:500px;"></div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of basic-1 -->
 
+    <!-- Footer -->
+    <div class="footer bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of footer -->  
+    <!-- end of footer -->
+
+    <!-- Copyright -->
+    <div class="copyright bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="p-small">Copyright © DEEPOLICE</p>
+                </div> <!-- end of col -->
+            </div> 
+            <!-- enf of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of copyright --> 
+    <!-- end of copyright -->
+    
+    	
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
+    <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script src="js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->
+    <script src="js/jquery.magnific-popup.js"></script> <!-- Magnific Popup for lightboxes -->
+    <script src="js/scripts.js"></script> <!-- Custom scripts -->
+</body>
+    <script>
+    document.getElementByName('objectName').selected = true;
+
+    </script>
+
+    <script>
+        datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+        function datePickerSet(sDate, eDate, flag) {
+
+//시작 ~ 종료 2개 짜리 달력 datepicker	
+if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0 && eDate.length > 0) {
+    var sDay = sDate.val();
+    var eDay = eDate.val();
+
+    if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
+        var sdp = sDate.datepicker().data("datepicker");
+        sdp.selectDate(new Date(sDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+
+        var edp = eDate.datepicker().data("datepicker");
+        edp.selectDate(new Date(eDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+    }
+
+    //시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+    if (!isValidStr(eDay)) {
+        sDate.datepicker({
+            maxDate: new Date(eDay.replace(/-/g, "/"))
+        });
+    }
+    sDate.datepicker({
+        language: 'ko',
+        autoClose: true,
+        onSelect: function () {
+            datePickerSet(sDate, eDate);
+        }
+    });
+
+    //종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+    if (!isValidStr(sDay)) {
+        eDate.datepicker({
+            minDate: new Date(sDay.replace(/-/g, "/"))
+        });
+    }
+    eDate.datepicker({
+        language: 'ko',
+        autoClose: true,
+        onSelect: function () {
+            datePickerSet(sDate, eDate);
+        }
+    });
+
+    //한개짜리 달력 datepicker
+} else if (!isValidStr(sDate)) {
+    var sDay = sDate.val();
+    if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
+        var sdp = sDate.datepicker().data("datepicker");
+        sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+    }
+
+    sDate.datepicker({
+        language: 'ko',
+        autoClose: true
+    });
+}
+
+function isValidStr(str) {
+    if (str == null || str == undefined || str == "")
+        return true;
+    else
+        return false;
+}
+}
+    </script>
 </html>
+<script type="text/javascript">
+    $(".results").click(function(){
+        var pl = $("input[name='platforms']:checked").val();      
+        var cr = $("input[name='crimes']:checked").val(); 
+        var d1=$("input[name='date1']").val();
+        var d2=$("input[name='date2']").val();
+        $.ajax({ 
+            type: "POST", 
+            url: "{% url 'main:result' %}", 
+            data: {'platforms': pl,'crimes':cr, 'date1':d1,'date2':d2,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: "json", 
+            success: function(response){ 
+                output(response)
+            },
+            error: function(request, status, error){
+                alert("오류")
+            },
+        });
+        history.pushState({
+            data:"/result",
+            page:1
+        },null,"/result?page=1");
+        window.onpopstate = function(event) {
+        alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+        output(response);
+        loadStateContent(event.state);
+        }
+    })
+
+    function output(response){
+        if (response.num==0)
+            alert('검색결과를 찾을 수 없습니다.');
+        else
+            if (response.platform=='twitter'){
+                var html=""
+                html+="<table>";
+                html+="<thead>";
+                html+="<tr>";
+                html+="<th>MESSAGE</th>";
+                html+="</tr>";
+                html+="</thead>";
+                html+="<tbody>";
+                for (var i=0; i<response.arr.length; i++){
+                    html+="<tr>";
+                    html+="<td>"+response.arr[i]['msg']+"</td>";
+                    html+="</tr>";
+                }
+                html+="</tbody>";
+                html+="</table>";
+
+                document.getElementById("tab").innerHTML=html;
+            }
+            else if (response.platform=="telegram"){
+                var html=""
+                html+="<table id='telegram'>";
+                html+="<thead>";
+                html+="<tr>";
+                html+="<th>CHANNEL ID</th>";
+                html+="<th>NUMBER OF USERS</th>";
+                html+="<th>NUMBER OF HIGH-RISK USERS</th>";
+                html+="</tr>";
+                html+="</thead>";
+                html+="<tbody>";
+                for (var i=0; i<response.arr.length; i++){
+                    html+="<tr>";
+                    html+="<td><a id='channel_id' href='javascript:void(0);' onclick='users(this);'>"+response.arr[i]['channel_id']+"</a></td>";
+                    html+="<td>"+response.arr[i]['user_num']+"</td>";
+                    html+="</tr>";
+                }
+                html+="</tbody>";
+                html+="</table>";
+                document.getElementById("tab").innerHTML=html;
+            }
+            else if (response.platform=="discord"){
+                var html=""
+                html+="<table>";
+                html+="<thead>";
+                html+="<tr>";
+                html+="<th>CHANNELID</th>";
+                html+="<th>MESSAGE</th>";
+                html+="<th>USERNAME</th>";
+                html+="<th>TIMESTAMP</th>";
+                html+="</tr>";
+                html+="</thead>";
+                html+="<tbody>";
+                for (var i=0; i<response.arr.length; i++){
+                    html+="<tr>";
+                    html+="<td>"+response.arr[i]['channel_id']+"</td>";
+                    html+="<td>"+response.arr[i]['content']+"</td>";
+                    html+="<td>"+response.arr[i]['username']+"</td>";
+                    html+="<td>"+response.arr[i]['timestamp']+"</td>";
+                    html+="</tr>";
+                }
+                html+="</tbody>";
+                html+="</table>";
+                document.getElementById("tab").innerHTML=html;
+            }
+    }
+    function users(){
+        $("#channel_id").click(function(){
+            var channel_id=$(this).text();
+            var pl = $("input[name='platforms']:checked").val();      
+            var cr = $("input[name='crimes']:checked").val(); 
+
+            $.ajax({ 
+                type: "POST", 
+                url: "{% url 'main:users_info' %}", 
+                data: {'channel_id': channel_id,'platform':pl,'crimes':cr, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: "json", 
+                success: function(response){
+                    users_output(response);
+                },
+                error: function(request, status, error){
+                    alert("오류")
+                },
+            });
+
+            history.pushState({
+            data:"/result",
+            page:2,
+            },null,"/result?page=2");
+        window.onpopstate = function(event) {
+        alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+        loadStateContent(event.state);
+        }
+        })
+    }
+    function users_output(response){
+        if (response.num==0)
+            alert('검색결과를 찾을 수 없습니다.');
+        else
+            if (response.platform=="telegram"){
+                var html=""
+                html+="<table>";
+                html+="<thead>";
+                html+="<tr>";
+                html+="<th>USER ID</th>";
+                html+="<th>MESSAGE COUNT</th>";
+                html+="<th>RISK</th>";
+                html+="</tr>";
+                html+="</thead>";
+                html+="<tbody>";
+                for (var i=0; i<response.arr.length; i++){
+                    html+="<tr>";
+                    html+="<td><a id='user_id' href='javascript:void(0);' onclick='messages(this);'>"+response.arr[i]+"</a></td>";
+                    html+="</tr>";
+                }
+                html+="</tbody>";
+                html+="</table>";
+                document.getElementById("tab").innerHTML=html;
+            }
+    }
+    function messages(){
+        $("#user_id").click(function(){
+            var user_id=$(this).text();
+            var pl = $("input[name='platforms']:checked").val();      
+            var cr = $("input[name='crimes']:checked").val(); 
+            $.ajax({ 
+                type: "POST", 
+                url: "{% url 'main:messages_info' %}", 
+                data: {'user_id': user_id,'platform':pl,'crimes':cr, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: "json", 
+                success: function(response){
+                    messages_output(response);
+                },
+                error: function(request, status, error){
+                    alert("오류")
+                },
+            });
+            history.pushState({
+            data:"/result",
+            page:3
+            },null,"/result?page=3");
+        })
+    }
+    function messages_output(response){
+        if (response.num==0)
+            alert('검색결과를 찾을 수 없습니다.');
+        else
+        if (response.platform=="telegram"){
+                var html=""
+                html+="MESSAGE COUNT : "+response.arr.length;
+                html+="<table>";
+                html+="<thead>";
+                html+="<tr>";
+                html+="<th>TIME</th>";
+                html+="<th>MESSAGE</th>";
+                html+="</tr>";
+                html+="</thead>";
+                html+="<tbody>";
+                for (var i=0; i<response.arr.length; i++){
+                    html+="<tr>";
+                    html+="<td>"+response.arr[i]['date']+"</td>";
+                    html+="<td>"+response.arr[i]['message']+"</td>";
+                    html+="</tr>";
+                }
+                html+="</tbody>";
+                html+="</table>";
+                document.getElementById("tab").innerHTML=html;
+                wordcloud(response.text);
+            }
+    }
+  </script>
+  <script>
+      function wordcloud(text){
+        lines = text.split(/[,\. ]+/g),
+        data = lines.reduce((arr, word) => {
+            let obj = Highcharts.find(arr, obj => obj.name === word);
+            if (obj) {
+                obj.weight += 1;
+            } else {
+                obj = {
+                    name: word,
+                    weight: 1
+                };
+                arr.push(obj);
+            }
+            return arr;
+        }, []);
+
+        Highcharts.chart('container', {
+            chart:{
+                height:560,
+                width:1000
+            },
+            accessibility: {
+                screenReaderSection: {
+                    beforeChartFormat: '<h5>{chartTitle}</h5>' +
+                        '<div>{chartSubtitle}</div>' +
+                        '<div>{chartLongdesc}</div>' +
+                        '<div>{viewTableButton}</div>'
+                }
+            },
+            series: [{
+                type: 'wordcloud',
+                data,
+                name: 'Occurrences'
+            }],
+            title: {
+                text: 'WORDCLOUD'
+            }
+        });
+      }
+  </script>
