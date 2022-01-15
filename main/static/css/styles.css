@@ -1,8 +1,6 @@
 /* Description: Master CSS file */
-
 /*****************************************
 Table Of Contents:
-
 - General Styles
 - Navigation
 - Header
@@ -30,11 +28,10 @@ Colors:
 - Body text - dark gray #6b747b
 ******************************************/
 
-
 /**************************/
 /*     General Styles     */
 /**************************/
-*{margin:0px; padding:0px;font-family: 'Do Hyeon', sans-serif;}
+*{margin:0px; padding:0px;}
 :root {
     --gray-100-color: #f9fbff;
     --gray-150-color: #f4f6fb;
@@ -49,6 +46,12 @@ Colors:
   padding: 0;
 }
 
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 table {
     width:100%;
     background-color: white;
@@ -83,37 +86,43 @@ html {
 
 body, p {
 	color: #6b747b; 
-	font: 400 1rem/1.625rem "Open Sans", sans-serif;
+	font: 400 1rem/1.625rem;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 h1 {
 	color: #333333;
-	font: 600 2.5rem/3.25rem "Poppins", sans-serif;
+	font: 600 2.5rem/3.25rem;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 h2 {
 	color: #1b1e7b;
-	font: 600 2.125rem/2.75rem "Poppins", sans-serif;
+	font: 600 2.125rem/2.75rem ;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 h3 {
 	color: #1b1e7b;
-	font: 600 1.75rem/2.375rem "Poppins", sans-serif;
+	font: 600 1.75rem/2.375rem;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 h4 {
 	color: #1b1e7b;
-	font: 600 1.5rem/2.125rem "Poppins", sans-serif;
+	font: 600 1.5rem/2.125rem ;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
-
 h5 {
-	color: #333333;
-	font: 600 1.25rem/1.75rem "Poppins", sans-serif;
+	color: #222378;	
+	font: 600 1.25rem/1.75rem;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 h6 {
 	color: #333333;
-	font: 600 1rem/1.5rem "Poppins", sans-serif;
+	font: 600 1rem/1.5rem ;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .p-large {
@@ -131,7 +140,8 @@ h6 {
 }
 
 .testimonial-author {
-	font: 500 1rem/1.5rem "Poppins", sans-serif;
+	font: 500 1rem/1.5rem ;
+	font-family: 'EliceDigitalBaeum_Bold';
 }
 
 .li-space-lg li {
@@ -456,36 +466,6 @@ input[type='checkbox'] {
 }
 /* end of fade-move animation for details lightbox - magnific popup */
 
-
-/**********************/
-/*     Navigation     */
-/**********************/
-.navbar {
-	background-color: #1b1e7b;
-	font-weight: 600;
-	font-size: 0.875rem;
-	line-height: 0.875rem;
-	box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.025);
-}
-
-.navbar .navbar-brand {
-	padding-top: 0.25rem;
-	padding-bottom: 0.25rem;
-}
-
-.navbar .logo-image img {
-    width: 150px;
-	height: 24px;
-}
-
-.navbar .logo-text {
-	color: #ffffff;
-	font-weight: 600;
-	font-size: 2rem;
-	line-height: 1rem;
-	text-decoration: none;
-}
-
 .offcanvas-collapse {
 	position: fixed;
 	top: 3rem; /* adjusts the height between the top of the page and the offcanvas menu */
@@ -507,62 +487,6 @@ input[type='checkbox'] {
 	-webkit-transform: translateX(-100%);
 	transform: translateX(-100%);
 }
-
-.navbar .navbar-nav {
-	margin-top: 0.75rem;
-	margin-bottom: 0.5rem;
-}
-
-.navbar .nav-item .nav-link {
-	padding-top: 0.625rem;
-	padding-bottom: 0.625rem;
-	color: #c5c3f0;
-	text-decoration: none;
-	transition: all 0.2s ease;
-}
-
-.navbar .nav-item.dropdown.show .nav-link,
-.navbar .nav-item .nav-link:hover,
-.navbar .nav-item .nav-link.active {
-	color: #ffffff;
-}
-
-.navbar .social-icons {
-	display: block;
-}
-
-.navbar .fa-stack {
-	width: 2em;
-	margin-top: 0.25rem;
-	margin-right: 0.25rem;
-	font-size: 0.75rem;
-}
-
-.navbar .fa-stack-2x {
-	color: #026cfe;
-	transition: all 0.2s ease;
-}
-
-.navbar .fa-stack-1x {
-	color: #ffffff;
-	transition: all 0.2s ease;
-}
-
-.navbar .fa-stack:hover .fa-stack-2x {
-	color: #ffffff;
-}
-
-.navbar .fa-stack:hover .fa-stack-1x {
-	color: #026cfe;
-}
-
-.navbar .navbar-toggler {
-	padding: 0;
-	border: none;
-	font-size: 1.25rem;
-}
-
-
 /*****************/
 /*    Header     */
 /*****************/
@@ -638,7 +562,6 @@ input[type='checkbox'] {
 /*     Statement     */
 /*********************/
 .basic-1 {
-	padding-top: 2rem;
 	padding-bottom: 3.75rem;
 }
 
@@ -659,37 +582,6 @@ input[type='checkbox'] {
 	margin-bottom: 0.75rem;
 	border-radius: 50%;
 }
-
-
-/*********************/
-/*     Details 1     */
-/*********************/
-.basic-2 {
-	padding-top: 3.75rem;
-	padding-bottom: 4.5rem;
-}
-
-.basic-2 .image-container {
-	margin-bottom: 3.75rem;
-}
-
-.basic-2 h2 {
-	margin-bottom: 1.25rem;
-}
-
-.basic-2 .list-unstyled {
-	margin-bottom: 1.625rem;
-}
-
-.basic-2 .list-unstyled .fas {
-	font-size: 0.375rem;
-	line-height: 1.625rem;
-}
-
-.basic-2 .list-unstyled .media-body {
-	margin-left: 0.5rem;
-}
-
 
 /****************************/
 /*     Details Lightbox     */
@@ -794,79 +686,6 @@ input[type='checkbox'] {
 }
 /* end of close x button */
 
-
-/*********************/
-/*     Details 2     */
-/*********************/
-.basic-3 {
-	padding-top: 4.5rem;
-	padding-bottom: 4.5rem;
-}
-
-.basic-3 h2 {
-	margin-bottom: 1.25rem;
-}
-
-.basic-3 .text-container {
-	margin-bottom: 4rem;
-}
-
-.basic-3 .list-unstyled {
-	margin-bottom: 1.625rem;
-}
-
-.basic-3 .list-unstyled .fas {
-	font-size: 0.375rem;
-	line-height: 1.625rem;
-}
-
-.basic-3 .list-unstyled .media-body {
-	margin-left: 0.5rem;
-}
-
-
-/********************/
-/*     Features     */
-/********************/
-.basic-4 {
-	padding-top: 4.5rem;
-	padding-bottom: 2.5rem;
-}
-
-.basic-4 .fas {
-	margin-bottom: 1.5rem;
-	color: #026cfe;
-	font-size: 3.25rem;
-}
-
-.basic-4 .text-box {
-	margin-bottom: 3rem;
-	padding: 2.5rem 1rem 1.125rem 1rem;
-	border-radius: 10px;
-}
-
-
-/*****************/
-/*     About     */
-/*****************/
-.basic-5 {
-	padding-top: 3rem;
-	padding-bottom: 3rem;
-}
-
-.basic-5 .text-container {
-	margin-bottom: 3rem;
-}
-
-.basic-5 h2 {
-	margin-bottom: 1.25rem;
-}
-
-.basic-5 .image-container {
-	margin-bottom: 3rem;
-}
-
-
 /**********************/
 /*     Statistics     */
 /**********************/
@@ -903,24 +722,6 @@ input[type='checkbox'] {
 	vertical-align: middle;
 }
 
-
-/**********************/
-/*     Invitation     */
-/**********************/
-.basic-6 {
-	text-align: center;
-}
-
-.basic-6 .text-container {
-	padding: 4rem 1.25rem 4.5rem 1.25rem;
-	border-radius: 10px;
-}
-
-.basic-6 h4 {
-	margin-bottom: 1.625rem;
-}
-
-
 /*******************/
 /*     Contact     */
 /*******************/
@@ -954,52 +755,20 @@ input[type='checkbox'] {
 	right: -200px;
 }
 
-
-/******************/
-/*     Footer     */
-/******************/
-.footer {
-	padding-top: 5.25rem;
-	padding-bottom: 1rem;
-	text-align: center;
-}
-
-.footer a {
-	text-decoration: none;
-}
-
-.footer .fa-stack {
-	width: 2em;
-	margin-bottom: 1.25rem;
-	margin-right: 0.375rem;
-	font-size: 1.5rem;
-}
-
-.footer .fa-stack .fa-stack-1x {
-    color: #1b1e7b;
-	transition: all 0.2s ease;
-}
-
-.footer .fa-stack .fa-stack-2x {
-	color: #ffffff;
-	transition: all 0.2s ease;
-}
-
-.footer .fa-stack:hover .fa-stack-1x {
-	color: #ffffff;
-}
-
-.footer .fa-stack:hover .fa-stack-2x {
-    color: #1b1e7b;
-}
-
-
 /*********************/
 /*     Copyright     */
 /*********************/
+footer{
+	position:fixed;
+	bottom:0;left:0;
+	height:35px;
+	padding-top:10px;
+	width:100%;
+	text-align: center;
+
+}
 .copyright {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+	height:90px;
 	text-align: center;
 }
 
@@ -1047,29 +816,11 @@ a:hover.back-to-top {
 	}
 	/* end of general Styles */
 
-
 	/* Header */
 	.header {
 		padding-top: 8rem;
 	}
 	/* end of header */
-
-
-	/* Features */
-	.basic-4 .text-box {
-		padding-right: 2rem;
-		padding-left: 2rem;
-	}
-	/* end of features */
-
-
-	/* Invitation */
-	.basic-6 h4 {
-		width: 35rem;
-		margin-right: auto;
-		margin-left: auto;
-	}
-	/* end of invitation */
 }
 /* end of min-width 768px */
 
@@ -1100,22 +851,6 @@ a:hover.back-to-top {
 	}
 	/* end of general styles */
 
-
-	/* Navigation */
-	.navbar {
-		padding-top: 1.75rem;
-		background-color: transparent;
-		box-shadow: none;
-		transition: all 0.2s;
-	}
-
-	.navbar.top-nav-collapse {
-		padding-top: 0.625rem;
-		padding-bottom: 0.625rem;
-		background-color: #1b1e7b;
-		box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.025);
-	}
-
 	.offcanvas-collapse {
 		position: static;
 		top: auto;
@@ -1133,31 +868,11 @@ a:hover.back-to-top {
 		-webkit-transform: none;
 		transform: none;
 	}
-
-	.navbar .navbar-nav {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-	
-	.navbar .nav-item .nav-link {
-		padding-right: 0.75rem;
-		padding-left: 0.75rem;
-	}
-
-	.navbar .social-icons {
-		margin-left: 0.5rem;
-	}
-	
-	.navbar .fa-stack {
-		margin-top: 0;
-		margin-right: 0;
-		margin-left: 0.25rem;
-	}
-	/* end of navigation */
 	
 	/* Header */
 	.header {
-		padding-bottom: 19rem;
+		margin-top:-135px;
+		padding-bottom: 10rem;
 	}
 
 	.header .text-container {
@@ -1166,7 +881,6 @@ a:hover.back-to-top {
 	}
 	/* end of header */
 
-
 	/* Statement */
 	.basic-1 .text-container {
 		width: 100%;
@@ -1174,14 +888,6 @@ a:hover.back-to-top {
 		margin-left: auto;
 	}
 	/* end of statement */
-
-
-	/* Details 1 */
-	.basic-2 .image-container {
-		margin-bottom: 0;
-	}
-	/* end of details 1 */
-
 
 	/* Details Lightbox */
 	.lightbox-basic {
@@ -1194,45 +900,13 @@ a:hover.back-to-top {
 	}
 	/* end of details lightbox */
 
-
-	/* Details 2 */
-	.basic-3 .text-container {
-		margin-bottom: 0;
-	}
-	/* end of details 2 */
-
-
-	/* About */
-	.basic-5 .text-container {
-		margin-bottom: 0;
-	}
-	
-	.basic-5 .image-container {
-		margin-bottom: 0;
-	}
-	/* end of about */
-
-
 	/* Statistics */
 	.counter {
 		padding-top: 5rem;
 	}
 	/* end of statistics */
-
-
-	/* Invitation */
-	.basic-6 .text-container {
-		padding-top: 6rem;
-		padding-bottom: 6rem;
-	}
-
-	.basic-6 h4 {
-		width: 600px;
-	}
-	/* end of invitation */
 }
 /* end of min-width 992px */
-
 
 /* Min-width 1200px */
 @media (min-width: 1200px) {
@@ -1242,16 +916,6 @@ a:hover.back-to-top {
 		height: 128px;
 	}
 	/* end of general styles */
-
-
-	/* Navigation */
-	.navbar .container {
-		max-width: 100%;
-		padding-right: 1.5rem;
-		padding-left: 1.5rem;
-	}
-	/* end of navigation */
-
 
 	/* Header */
 	.header {
@@ -1269,24 +933,11 @@ a:hover.back-to-top {
 	}
 	/* end of header */
 
-
 	/* Statement */
 	.basic-1 {
 		padding-top: 5rem;
 	}
 	/* end of statement */
-
-
-	/* Details 1 */
-	.basic-2 .image-container {
-		margin-right: 5rem;
-	}
-
-	.basic-2 .text-container {
-		margin-top: 2.75rem;
-	}
-	/* end of details 1 */
-
 
 	/* Details Lightbox */
 	.lightbox-basic .image-container {
@@ -1294,37 +945,12 @@ a:hover.back-to-top {
 	}
 	/* end of details lightbox */
 
-
-	/* Details 2 */
-	.basic-3 .text-container {
-		margin-top: 2.75rem;
-	}
-
-	.basic-3 .image-container {
-		margin-left: 5rem;
-	}
-	/* end of details 2 */
-
-
-	/* About */
-	.basic-5 .text-container {
-		margin-top: 3.5rem;
-	}
-
-	.basic-5 .image-container {
-		margin-right: 3.5rem;
-		margin-left: 2.5rem;
-	}
-	/* end of about */
-
-
 	/* Statistics */
 	.counter #counter .cell {
 		margin-right: 2.375rem;
 		margin-left: 2.375rem;
 	}
 	/* end of statistics */
-
 
 	/* Contact */
 	form {
@@ -1341,21 +967,19 @@ a:hover.back-to-top {
 	/* end of contact */
 }
 /* end of min-width 1200px */
-
 #content{
+	min-height:100%;
+	margin-top:-30px;
 	width:100%;
 }
 #platform,#type{
-    float:left;
-    width:15%;
-    height:140px;
-    margin-right:10px;
+    width:38%;
+    height:90px;
+	margin-left:180px;
 }
 #submit{
-    float:left;
-    width:10%;
+    width:20%;
     height:100px;
-    margin:10px;
 }
 #calender{
     float:left;
@@ -1365,12 +989,13 @@ a:hover.back-to-top {
 }
 #search{
     float:left;
-    width: 60px;
+    width: 65px;
     height:40px;
-    margin-top:40px;
-    font-size: 15px;
-    color: white;
-    background-color:darkblue;
+    margin-top:-63px;
+	margin-left:620px;
+    font-size: 23px;
+    color: #222378;
+    background-color:white;
     border-radius: 5px;
     border: none;
 }
@@ -1382,7 +1007,7 @@ a:hover.back-to-top {
 }
 
 .highcharts-data-table table {
-    font-family: Verdana, sans-serif;
+	font-family: 'EliceDigitalBaeum_Bold';
     border-collapse: collapse;
     border: 1px solid #ebebeb;
     margin: 10px auto;

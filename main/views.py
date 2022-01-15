@@ -3,7 +3,6 @@ from django.http import HttpResponse
 import json
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, A,Q, Index
-from elasticsearch_dsl.query import MultiMatch, Match
 
 def index(request):
     return render(request,'main/index.html')
@@ -11,236 +10,310 @@ def index(request):
 def result(request):
     i = request.POST.get('platforms')
     j = request.POST.get('crimes')
-    arr=[]
+    global num
+    global user_num
 
-    if not i or not j:
+    try:
+        if i=="twitter" and j=="sexcrime":
+            index_name="kcelectra_twitter_sexual"
+        elif i=="telegram" and j=="sexcrime":
+            index_name="kcelectra_telegram_sexual"
+        elif i=="discord" and j=="sexcrime":
+            index_name="kcelectra_discord_sexual"
+        elif i=="twitter" and j=="drug":
+            index_name="kcelectra_twitter_drug"
+        elif i=="telegram" and j=="drug":
+            index_name="kcelectra_telegram_drug"
+        elif i=="discord" and j=="drug":
+            index_name="kcelectra_discord_drug"
+        elif i=="twitter" and j=="gambling":
+            index_name="kcelectra_twitter_gambling"
+        elif i=="telegram" and j=="gambling":
+            index_name="kcelectra_telegram_gambling"            
+        elif i=="discord" and j=="gambling":
+            index_name="kcelectra_discord_gambling"
+        if i=="twitter":
+            arr,num,new2_dict,user_num,high_user_num=search(i,index_name)
+        elif i=="telegram" or i=="discord":
+            arr,num,channel,user_num=search(i,index_name)
+    except:
+        arr=[]
+        new2_dict={}
+        channel={}
         num=0
-    else:
-        try:
-            if i=="twitter" and j=="sexcrime":
-                index_name="train_twitter_sexual"
-            elif i=="telegram" and j=="sexcrime":
-                index_name="telegram_sexcrime"
-            elif i=="discord" and j=="sexcrime":
-                index_name="discord_sexual"
-            elif i=="twitter" and j=="drug":
-                index_name="train_twitter_drug"
-            elif i=="telegram" and j=="drug":
-                index_name="koelectra_tele_raw"
-            elif i=="discord" and j=="drug":
-                index_name="discord_drug"
-            elif i=="twitter" and j=="gambling":
-                index_name="twitter_drug"
-            elif i=="telegram" and j=="gambling":
-                index_name="train_telegram_gambling"            
-            elif i=="discord" and j=="gambling":
-                index_name="discord_gambling"
-            arr,num,user_num=search(i,index_name)
-        except:
-            num=0
-    context={"arr":arr,"platform":i,"crime":j,"num":num,"user_num":user_num}
+        user_num=0
+        high_user_num=0
+    if i=="twitter":
+        context={"arr":arr,"platform":i,"crime":j,"num":num,"new2_dict":new2_dict,"user_num":user_num,"high_user_num":high_user_num}
+    elif i=="telegram" or i=="discord":
+        context={"arr":arr,"platform":i,"crime":j,"num":num,"channel_dict":channel,"user_num":user_num}
     return HttpResponse(json.dumps(context), content_type="application/json")
-    #return render(request,'main/index.html',{"arr":arr,"platform":i,"crime":j,"num":num})
 
 def search(i,index_name):#channel 목록 보여주기
     tmp='http://elastic:deepolice@13.209.69.94:9200'
     es = Elasticsearch(tmp)
-    #timestamp_range = { "@timestamp": { "gte": d1, "lte": d2 } }
-    #res = Search(index = index_name, doc_type = "_doc", using=es).filter("range", **timestamp_range)
 
-    res = Search(index = index_name, doc_type = "_doc", using=es)
-    res=res.extra(track_total_hits=True,size=1000)
-    results=res.execute()
-    num=results.hits.total['value']
-
-    if i=="twitter":
-        outputs=[]
-        for i in range(100):
-            output={}
-            r=results.hits[i]['msg']
-            output['msg']=r
-            outputs.append(output)
-    elif i=="telegram":
-        output1=set()
-        output2=set()
-        j=0
-        user_num=0
-        while j<num:
-            r1=results.hits[j]['peer_id_channel_id']
-            output1.add(r1)
-            j+=1
-        output1=list(output1)
-        outputs=[]
-        for i in range(len(output1)):
-            res2 = Search(index = index_name, doc_type = "_doc", using=es)
-            res2=res2.extra(track_total_hits=True,size=1000)
-            res2=res2.filter('term',peer_id_channel_id=int(output1[i]))
-            results2=res2.execute()
-            num2=results2.hits.total['value']
-            k=0
-            while k<num2:
-                r2=results2.hits[k]['from_id_user_id']
-                output2.add(r2)
-                k+=1
-            output2=list(output2)
-            user_num=len(output2)
-            output={}
-            output['channel_id']=int(output1[i])
-            output['user_num']=user_num
-            outputs.append(output)
-            print(outputs)
+    if i=="twitter" or i=="telegram":
+        resp = es.search(index=index_name,body={"size": 10000, "query":{"match_all": {}},"sort":{'date':{'order':'asc'}},},scroll='5m')
     elif i=="discord":
-        outputs=[]
-        for i in range(100):
-            output={}
-            r1=results.hits[i]['channel_id']
-            output['channel_id']=r1
-            outputs.append(output)
-    return outputs,num,user_num
+        resp = es.search(index=index_name,body={"size": 10000, "query":{"match_all": {}},"sort":{'timestamp':{'order':'asc'}},},scroll='5m')
+    old_scroll_id=resp['_scroll_id']
 
-def users_info(request):
-    i=request.POST.get('platform')
-    j=request.POST.get('crimes')
-    id = request.POST.get('channel_id')
-    
-    if i=="twitter" and j=="sexcrime":
-        index_name="train_twitter_sexual"
-    elif i=="telegram" and j=="sexcrime":
-        index_name="telegram_sexcrime"
-    elif i=="discord" and j=="sexcrime":
-        index_name="discord_sexual"
-    elif i=="twitter" and j=="drug":
-        index_name="train_twitter_drug"
-    elif i=="telegram" and j=="drug":
-        index_name="koelectra_tele_raw"
-    elif i=="discord" and j=="drug":
-        index_name="discord_drug"
-    elif i=="twitter" and j=="gambling":
-        index_name="twitter_drug"
-    elif i=="telegram" and j=="gambling":
-        index_name="train_telegram_gambling"            
-    elif i=="discord" and j=="gambling":
-        index_name="discord_gambling"
-    arr,num=search2(i,index_name,id)
-
-    context={"arr":arr,"num":num,"platform":i}
-    return HttpResponse(json.dumps(context), content_type="application/json")
-
-def search2(i,index_name,id):#해당하는 channel에 존재하는 user목록보여주기
-    tmp='http://elastic:deepolice@13.209.69.94:9200'
-    es = Elasticsearch(tmp)
- 
-    res = Search(index = index_name, doc_type = "_doc", using=es)
-    res=res.extra(track_total_hits=True,size=1000)
-    res=res.filter('term',peer_id_channel_id=id)
-    results=res.execute()
-    num=results.hits.total['value']
+    global outputs
+    outputs=[]#outputs에 전체 es내용 다 저장
     if i=="twitter":
-        outputs=[]
-        for i in range(100):
+        for doc in resp['hits']['hits']:
             output={}
-            r=results.hits[i]['msg']
-            output['msg']=r
-            outputs.append(output)
-    elif i=="telegram":
-        outputs=set()
-        j=0
-        while j<num:
-            r1=results.hits[j]['from_id_user_id']
-            outputs.add(r1)
-            j+=1
-        outputs=list(outputs)
-    elif i=="discord":
-        outputs=[]
-        for i in range(100):
-            output={}
-            r1=results.hits[i]['channel_id']
-            r2=results.hits[i]['content']
-            r3=results.hits[i]['username']
-            r4=results.hits[i]['timestamp']
-            output['channel_id']=r1
-            output['content']=r2
-            output['username']=r3
-            output['timestamp']=r4
-            outputs.append(output)
-    return outputs,num
-
-
-def messages_info(request):
-    i=request.POST.get('platform')
-    j=request.POST.get('crimes')
-    id = request.POST.get('user_id')
-    
-    if i=="twitter" and j=="sexcrime":
-        index_name="train_twitter_sexual"
-    elif i=="telegram" and j=="sexcrime":
-        index_name="telegram_sexcrime"
-    elif i=="discord" and j=="sexcrime":
-        index_name="discord_sexual"
-    elif i=="twitter" and j=="drug":
-        index_name="train_twitter_drug"
-    elif i=="telegram" and j=="drug":
-        index_name="koelectra_tele_raw"
-    elif i=="discord" and j=="drug":
-        index_name="discord_drug"
-    elif i=="twitter" and j=="gambling":
-        index_name="twitter_drug"
-    elif i=="telegram" and j=="gambling":
-        index_name="train_telegram_gambling"            
-    elif i=="discord" and j=="gambling":
-        index_name="discord_gambling"
-    arr,num,text=search3(i,index_name,id)
-    context={"arr":arr,"num":num,"platform":i,"text":text}
-    return HttpResponse(json.dumps(context), content_type="application/json")
-
-def search3(i,index_name,id):#해당 user의 messages 보여주기
-    print(id)
-    tmp='http://elastic:deepolice@13.209.69.94:9200'
-    es = Elasticsearch(tmp)
- 
-    res = Search(index = index_name, doc_type = "_doc", using=es)
-    res=res.extra(track_total_hits=True,size=1000)
-    res=res.filter('term',from_id_user_id=id)
-    res=res.sort({"date":{"order":"asc"}})
-    results=res.execute()
-    num=results.hits.total['value']
-    if i=="twitter":
-        outputs=[]
-        for i in range(100):
-            output={}
-            r=results.hits[i]['msg']
-            output['msg']=r
-            outputs.append(output)
-    elif i=="telegram":
-        outputs=[]
-        text=""
-        j=0
-        while j<num:
-            output={}
-            r0=results.hits[j]['from_id_user_id']
-            r1=results.hits[j]['date']
-            r2=results.hits[j]['message']
-            r3=results.hits[j]['true']
-            r4=results.hits[j]['false']
+            r0=doc['_source']['user_id']
+            r1=doc['_source']['korea_date']
+            r2=doc['_source']['text']
+            r3=doc['_source']['true']
+            r4=doc['_source']['false']
             output['from_id_user_id']=r0
             output['date']=r1
             output['message']=r2
             output['true']=r3
             output['false']=r4
             outputs.append(output)
-            text+=r2
-            j+=1
-    elif i=="discord":
-        outputs=[]
-        for i in range(100):
+        while len(resp['hits']['hits']):
+            resp=es.scroll(scroll_id=old_scroll_id,scroll='1s')
+            for doc in resp['hits']['hits']:
+                output={}
+                r0=doc['_source']['user_id']
+                r1=doc['_source']['korea_date']
+                r2=doc['_source']['text']
+                r3=doc['_source']['true']
+                r4=doc['_source']['false']
+                output['from_id_user_id']=r0
+                output['date']=r1
+                output['message']=r2
+                output['true']=r3
+                output['false']=r4
+                outputs.append(output) 
+        new2_dict,user_num,high_user_num=avg_twi(outputs)
+        num=len(outputs)
+        return outputs,num,new2_dict,user_num,high_user_num
+    elif i=="telegram":
+        for doc in resp['hits']['hits']:
             output={}
-            r1=results.hits[i]['channel_id']
-            r2=results.hits[i]['content']
-            r3=results.hits[i]['username']
-            r4=results.hits[i]['timestamp']
-            output['channel_id']=r1
-            output['content']=r2
-            output['username']=r3
-            output['timestamp']=r4
+            r0=doc['_source']['from_id_user_id']
+            r1=doc['_source']['korea_date']
+            r2=doc['_source']['message']
+            r3=doc['_source']['true']
+            r4=doc['_source']['false']
+            r5=doc['_source']['peer_id_channel_id']
+            output['from_id_user_id']=r0
+            output['date']=r1
+            output['message']=r2
+            output['true']=r3
+            output['false']=r4
+            output['peer_id_channel_id']=r5
+        while len(resp['hits']['hits']):
+            resp=es.scroll(scroll_id=old_scroll_id,scroll='1s')
+            for doc in resp['hits']['hits']:
+                output={}
+                r0=doc['_source']['from_id_user_id']
+                r1=doc['_source']['korea_date']
+                r2=doc['_source']['message']
+                r3=doc['_source']['true']
+                r4=doc['_source']['false']
+                r5=doc['_source']['peer_id_channel_id']
+                output['from_id_user_id']=r0
+                output['date']=r1
+                output['message']=r2
+                output['true']=r3
+                output['false']=r4
+                output['peer_id_channel_id']=r5
+                outputs.append(output)
+        channel,user_num=avg(outputs)
+        num=len(outputs)
+        return outputs,num,channel,user_num
+    elif i=="discord":
+        for doc in resp['hits']['hits']:
+            output={}
+            r0=doc['_source']['user_id']
+            r1=doc['_source']['korea_date']
+            r2=doc['_source']['content']
+            r3=doc['_source']['true']
+            r4=doc['_source']['false']
+            r5=doc['_source']['channel_id']
+            output['from_id_user_id']=r0
+            output['date']=r1
+            output['message']=r2
+            output['true']=r3
+            output['false']=r4
+            output['peer_id_channel_id']=r5
             outputs.append(output)
-    return outputs,num,text
+        while len(resp['hits']['hits']):
+            resp=es.scroll(scroll_id=old_scroll_id,scroll='1s')
+            for doc in resp['hits']['hits']:
+                output={}
+                r0=doc['_source']['user_id']
+                r1=doc['_source']['korea_date']
+                r2=doc['_source']['content']
+                r3=doc['_source']['true']
+                r4=doc['_source']['false']
+                r5=doc['_source']['channel_id']
+                output['from_id_user_id']=r0
+                output['date']=r1
+                output['message']=r2
+                output['true']=r3
+                output['false']=r4
+                output['peer_id_channel_id']=r5
+                outputs.append(output)
+        channel,user_num=avg(outputs)
+        num=len(outputs)
+        return outputs,num,channel,user_num
+
+def avg_twi(outputs):
+    #한 레코드당 {(채널 id) : [평균, 총 count]}
+    global new2_dict
+    new2_dict={}
+    for i in outputs:
+        i['new_key']=i['from_id_user_id']
+        if new2_dict.get(i['new_key']):
+            cnt=int(new2_dict.get(i['new_key'])[1])
+            new_avg=(avg*cnt+float(i['true']))/(cnt+1)
+            cnt+=1
+            new_record={i['new_key']:[new_avg,cnt]}
+            new2_dict.update(new_record)
+        else:
+            new_record={i['new_key']:[i['true'],1]}
+            new2_dict.update(new_record)
+
+    user_num=0
+    high_user_num=0
+    for i,j in new2_dict.items():
+        user_num+=1
+        if float(j[0])>=0.7:
+            high_user_num+=1
+    return new2_dict,user_num,high_user_num
+
+def avg(outputs):
+    #user_id,channel_id를 키값으로 저장
+    for i in outputs:
+        new_value=i['from_id_user_id'],i['peer_id_channel_id']
+        i['new_key']=new_value
+    
+    #한 레코드당 {(유저 id, 채널 id) : [평균, 총 count]}
+    global new_dict
+    new_dict={}
+    for i in outputs:
+        if new_dict.get(i['new_key']):
+            avg=float(new_dict.get(i['new_key'])[0])
+            cnt=int(new_dict.get(i['new_key'])[1])
+            new_avg=(avg*cnt+float(i['true']))/(cnt+1)
+            cnt+=1
+            new_record={i['new_key']:[new_avg,cnt]}
+            new_dict.update(new_record)
+        else:
+            new_record={i['new_key']:[i['true'],1]}
+            new_dict.update(new_record)
+    #print(new_dict)
+
+    #채널id중복제거
+    channel=set()
+    for i in range(len(outputs)):
+        channel.add(outputs[i]['peer_id_channel_id'])
+    channel=list(channel)
+    #print(channel)
+
+    #channel별로 users,high_risk_users 저장
+    channel_dict={}
+    for i in range(len(channel)):
+        channel_dict[channel[i]]=[0,0]
+
+    #channel_dict={[channel_id:[users,high_risk_users]]}
+    #print("초기",channel_dict)
+    user_num=0
+    for i,j in new_dict.items():
+        #print(i[1],j[0])
+        for x in range(len(channel)):
+            if int(i[1])==int(channel[x]):
+                user_num+=1
+                channel_dict[channel[x]][0]+=1
+                #print(channel_dict)
+                if float(j[0])>=0.7:
+                    channel_dict[channel[x]][1]+=1
+    return channel_dict,user_num
+
+def users_info(request):
+    pl = request.POST.get('platforms')
+    cr = request.POST.get('crimes')
+    global ch
+    ch=request.POST.get('channel_id')
+
+    #user_num,high_user_num 계산
+    user_num=0
+    high_user_num=0
+    channel_dict={}
+    global outputs
+    channel_dict,t=avg(outputs)
+    for i,j in channel_dict.items():
+        if int(i)==int(ch):
+            user_num=j[0]
+            high_user_num=j[1]
+
+    #msg_num 계산
+    #{user_id:[risk,message_count]}
+    msg_num=0
+    global new_dict
+    global user_dict
+    user_dict={}
+    for i,j in new_dict.items():
+        if int(i[1])==int(ch):
+            msg_num+=j[1]
+            user_dict[i[0]]=[j[0],j[1]]
+
+    context={"channel_id":ch,"platform":pl,"crime":cr,"num":num,"user_dict":user_dict,"user_num":user_num,"high_user_num":high_user_num,"msg_num":msg_num}
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+def messages_info(request):
+    i=request.POST.get('platforms')
+    id = request.POST.get('user_id')
+    ch_id = request.POST.get('channel_id')
+    arr2=[]
+    user_msg_num=0
+    text=""
+    if i=="twitter":
+        for x,y in new2_dict.items():
+            if int(x)==int(id):
+                user_msg_num=y[1]
+        arr2,text=search2(id)
+    elif i=="telegram" or i=="discord":
+        #user_id 가져와서 msg 수 반환
+        for x,y in user_dict.items():
+            if int(x)==int(id):
+                user_msg_num=y[1]
+        arr2,text=search3(id)
+    context={"arr":arr2,"platform":i,"text":text,"msg_num":user_msg_num,"user_id":id,"channel_id":ch_id}
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+def search2(id):
+    global outputs
+    results=[]
+    text=""
+    for i in outputs:
+        if int(i['from_id_user_id'])==int(id):
+            result={}
+            result['from_id_user_id']=i['from_id_user_id']
+            result['date']=i['date']
+            result['message']=i['message']
+            results.append(result)
+            text+=(" "+i['message'])
+    return results,text
+
+def search3(id):#해당 user의 messages 보여주기
+    global outputs
+    global ch
+    results=[]
+    text=""
+    for i in outputs:
+        if int(i['from_id_user_id'])==int(id) and int(i['peer_id_channel_id'])==int(ch):
+            result={}
+            result['from_id_user_id']=i['from_id_user_id']
+            result['date']=i['date']
+            result['message']=i['message']
+            results.append(result)
+            text+=(" "+i['message'])
+    return results,text
