@@ -1,5 +1,5 @@
 <h1>Hidden-Channel-Monitoring</h1>
-javascript와 django를 이용한 딥러닝 기반 히든채널 사이버 범죄 모니터링 시스템입니다.<hr/>
+BoB10 DEEPOLICE HIDDEN CHANNEL MONITORING.<hr/>
 
 <h2>초기화면</h2>
 접속시 초기화면입니다.
