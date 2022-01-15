@@ -1,5 +1,5 @@
 <h1>Hidden-Channel-Monitoring</h1>
-BoB10 DEEPOLICE HIDDEN CHANNEL MONITORING.<hr/>
+BoB10 DEEPOLICE HIDDEN CHANNEL MONITORING<hr/>
 
 <h2>초기화면</h2>
 접속시 초기화면입니다.
