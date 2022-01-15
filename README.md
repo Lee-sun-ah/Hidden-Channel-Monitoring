@@ -16,7 +16,7 @@ BoB10 DEEPOLICE HIDDEN CHANNEL MONITORING<hr/>
 <img width="775" alt="7" src="https://user-images.githubusercontent.com/62545246/149612064-4d7b8ad2-8760-404b-9307-10a8b9e31791.PNG">
 유저 ID를 클릭하면 유저가 쓴 모든 메시지의 워드클라우드와 메시지와 시간이 출력됩니다.
 <img width="773" alt="8" src="https://user-images.githubusercontent.com/62545246/149612066-aa3ddaf5-f798-44a9-9fe8-180124444fb5.PNG"><hr/>
-<h1>플랫폼 별 검색결과</h1>
+<h2>플랫폼 별 검색결과</h2>
 트위터 : 유저ID->유저가 쓴 메시지<br>
 텔레그램 : 채널ID->유저ID->유저가 쓴 메시지<br>
 디스코드 : 채널ID->유저ID->유저가 쓴 메시지<br>
